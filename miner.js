@@ -5,7 +5,7 @@ const Promise = require("bluebird")
 const log = require('./log')
 
 // constrain our pool of blocks to discover from to the 10% most recent blocks, or whichever number you write here
-const blockThreshold = 0.9
+const blockThreshold = 0.1
 var blockchain = new web3("https://mainnet.infura.io/mG6jVQb9jtQvhQjr45cT")
 var alreadyDid = {}
 
@@ -19,10 +19,10 @@ async function rotate(blockNum){
 }
 
 async function load(){
-	log.methods.info(`miner.load`, `Miner started. Fetching latest block number and randomizing starting point with a threshold of ${blockThreshold}.`)
+	log.methods.info(`miner.load`, `Miner started. Fetching latest block number and randomizing starting point from one of the ${blockThreshold * 100}% most recent blocks.`)
 	let latestBlock = await blockchain.eth.getBlock('latest')
 	let blockNum = parseFloat(latestBlock.number)
-	let targetBlock  = Math.floor(blockNum - (Math.random() * (blockNum - (blockNum * blockThreshold))))
+	let targetBlock  = Math.floor(blockNum - (Math.random() * (blockNum * blockThreshold)))
 	log.methods.info(`miner.load`, `Starting from block num #${targetBlock}.`)
 		
 	// initiate discoverer
@@ -33,23 +33,23 @@ async function discover(blockNum){
 	try {
 		let latestBlock = await blockchain.eth.getBlock(blockNum)
 		var txs = _.values(latestBlock.transactions)
-		var count = 1;
 		var max = txs.length;
+		var count = 1;
 		await Promise.mapSeries(txs, async (txNum) => {
 			let tx = await blockchain.eth.getTransaction(txNum) 
 			
 			if(!alreadyDid[tx.from]){
-				await req(`https://etherscan.io/token/0xf699e3b6c47561b1f467c822cb387867e726834a?a=${tx.from}`)
+				await req(`https://etherscan.io/token/0x4FEE2D21aaCA705B70f86db48FE4b166482f7700?a=${tx.from}`)
 				await Promise.delay(500)
 				alreadyDid[tx.from] = true
-				log.methods.info(`miner.discover`, `[block progress: ${count} / ${max}] updated etherscan wallet for ${tx.from}`)
+				log.methods.info(`miner.discover`, `[${count} / ${max}] updated etherscan wallet for ${tx.from}`)
 			}
 
 			if(!alreadyDid[tx.to]){
-				await req(`https://etherscan.io/token/0xf699e3b6c47561b1f467c822cb387867e726834a?a=${tx.to}`)
+				await req(`https://etherscan.io/token/0x4FEE2D21aaCA705B70f86db48FE4b166482f7700?a=${tx.to}`)
 				await Promise.delay(500)
 				alreadyDid[tx.to] = true
-				log.methods.info(`miner.discover`, `[block progress: ${count} / ${max}] updated etherscan wallet for ${tx.to}`)
+				log.methods.info(`miner.discover`, `[${count} / ${max}] updated etherscan wallet for ${tx.to}`)
 
 			}
 			count++;

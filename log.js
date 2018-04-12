@@ -3,7 +3,7 @@ const moment = require('moment'); require('moment-timezone');
 
 var Logger = {
         properties: {
-                logFile: "bot.log"
+                logFile: "miner.log"
         },
         methods: {
 
@@ -13,24 +13,24 @@ var Logger = {
                  * @return {[type]}      [description]
                  */
                 w: function(caller, level, data){
-                        var currentTimestamp = moment().tz("Europe/Berlin").format(moment.HTML5_FMT.DATETIME_LOCAL)
-                        var prefix = `[${currentTimestamp}] ${caller}: `
+                    var currentTimestamp = moment().tz("Europe/Berlin").format(moment.HTML5_FMT.DATETIME_LOCAL)
+                    var prefix = `[${currentTimestamp}] ${caller}: `
 
-                        var message = prefix + data
-                        fs.appendFileSync(Logger.properties.logFile, message + "\n")
-                        console.log(message)
+                    var message = prefix + data
+                    fs.appendFileSync(Logger.properties.logFile, message + "\n")
+                    console.log(message)
                 },
 
                 info: function(caller, data){
-                        Logger.methods.w(caller, "info", data)
+                    Logger.methods.w(caller, "info", data)
                 },
 
                 warning: function(caller, data){
-                        Logger.methods.w(caller, "warning", data)
+                    Logger.methods.w(caller, "warning", data)
                 },
 
                 error: function(caller, data){
-                        Logger.methods.w(caller, "error", data)
+                    Logger.methods.w(caller, "error", data)
                 }
         }
 }
