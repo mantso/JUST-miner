@@ -55,10 +55,10 @@ async function discover(blockNum){
 			count++;
 		})
 
-		return Promise.resolve(true)
+		return true;
 	} catch(e) {
 		log.methods.error(`miner.discover`, `Somewhere, somehow, some error. Contact mantso with the following: ${JSON.stringify(e)}`)
-		return Promise.reject(e)
+		throw e;
 	}
 }
 
