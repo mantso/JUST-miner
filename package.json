@@ -1,0 +1,12 @@
+{
+  "name": "JUST-miner",
+  "version": "",
+  "dependencies": {
+    "async-request": "^1.2.0",
+    "bluebird": "^3.5.1",
+    "lodash": "^4.17.5",
+    "moment": "^2.22.0",
+    "moment-timezone": "^0.5.14",
+    "web3": "^1.0.0-beta.33"
+  }
+}
