@@ -15,9 +15,9 @@ You either download the precompiled binaries, or compile/run from source.
 
 ## Downloading the .EXE & other OS equivalents
 1. Go to https://github.com/mantso/JUST-miner/releases
-2. Download your platform's executable binary. .EXE for windows, etc.
-3. Extract the file into a directory.
-4. Run the file and watch the fireworks.
+2. Download your OS's release archive. `win` for Windows, etc. 
+3. Extract the files into a directory.
+4. Run miner-win.exe _or_ miner-linux _or_ miner-macos.app (whichever operating system equivalent you downloaded) and watch the fireworks.
 
 ## Executing from source
 1. Make sure you have [NodeJS 8.x](https://nodejs.org/en/) installed.
